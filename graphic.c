@@ -37,8 +37,8 @@ void init_palette(void) {
 
 void set_palette(int start, int end, unsigned char *rgb) {
   int i, eflags;
-  eflags = io_load_eflags(); /* 割り込み許可フラグの値を記録する */
-  io_cli();                  /* 許可フラグを0にして割り込み禁止にする */
+  eflags = io_load_eflags();
+  io_cli();                 
   io_out8(0x03c8, start);
   for (i = start; i <= end; i++) {
     io_out8(0x03c9, rgb[0] / 4);
@@ -46,7 +46,7 @@ void set_palette(int start, int end, unsigned char *rgb) {
     io_out8(0x03c9, rgb[2] / 4);
     rgb += 3;
   }
-  io_store_eflags(eflags); /* 割り込み許可フラグを元に戻す */
+  io_store_eflags(eflags);
   return;
 }
 
@@ -179,7 +179,6 @@ void putfonts8_asc(char *vram, int xsize, int x, int y, char c,
 }
 
 void init_mouse_cursor8(char *mouse, char bc)
-/* マウスカーソルを準備（16x16） */
 {
   static char cursor[16][16] = {
       "**************..", "*OOOOOOOOOOO*...", "*OOOOOOOOOO*....",

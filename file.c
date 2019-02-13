@@ -1,7 +1,6 @@
 #include "bootpack.h"
 
 void file_readfat(int *fat, unsigned char *img)
-/* ディスクイメージ内のFATの圧縮をとく */
 {
   int i, j = 0;
   for (i = 0; i < 2880; i += 2) {
@@ -40,14 +39,13 @@ struct FILEINFO *file_search(char *name, struct FILEINFO *finfo, int max) {
   j = 0;
   for (i = 0; name[i] != 0; i++) {
     if (j >= 11) {
-      return 0; /* 見つからなかった */
+      return 0;
     }
     if (name[i] == '.' && j <= 8) {
       j = 8;
     } else {
       s[j] = name[i];
       if ('a' <= s[j] && s[j] <= 'z') {
-        /* 小文字は大文字に直す */
         s[j] -= 0x20;
       }
       j++;
@@ -63,10 +61,10 @@ struct FILEINFO *file_search(char *name, struct FILEINFO *finfo, int max) {
           goto next;
         }
       }
-      return finfo + i; /* ファイルが見つかった */
+      return finfo + i;
     }
   next:
     i++;
   }
-  return 0; /* 見つからなかった */
+  return 0;
 }

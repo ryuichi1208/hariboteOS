@@ -81,8 +81,6 @@ void console_task(struct SHEET *sheet, int memtotal) {
             cons.cur_x -= 8;
           }
         } else if (i == 10 + 256) {
-          /* Enter */
-          /* カーソルをスペースで消してから改行する */
           cons_putchar(&cons, ' ', 0);
           cmdline[cons.cur_x / 8 - 2] = 0;
           cons_newline(&cons);
@@ -90,7 +88,6 @@ void console_task(struct SHEET *sheet, int memtotal) {
           if (cons.sht == 0) {
             cmd_exit(&cons, fat);
           }
-          /* プロンプト表示 */
           cons_putchar(&cons, '>', 1);
         } else {
           /* 一般文字 */
